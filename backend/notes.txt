@@ -1,0 +1,5 @@
+Frontend  : APK Android (Tab Advan)
+Database  : Firebase Firestore
+Backend   : Node.js di Railway
+Reminder  : Fonnte WhatsApp
+Report    : PDF Export
