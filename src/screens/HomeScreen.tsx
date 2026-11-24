@@ -829,7 +829,7 @@ const startX =
       <View>
 
         <Text style={styles.brandTitle}>
-          Toilet Card Control Electronic
+          Toilet Control Card Electronic
         </Text>
 
         <Text style={styles.brandSubtitle}>

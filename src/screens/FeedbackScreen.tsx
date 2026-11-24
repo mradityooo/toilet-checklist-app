@@ -273,7 +273,7 @@ if (submitted) {
           <View>
 
             <Text style={styles.headerTitle}>
-              Toilet Card Control Electronic
+              Toilet Control Card Electronic
             </Text>
 
             <Text style={styles.headerSubtitle}>
