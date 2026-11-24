@@ -1,34 +1,18 @@
 
-const {
-  sendMorningReminder,
-  sendEveningReminder,
-  sendDailyReport,
-} = require("../backend/reminder.js");
+const { run } = require("./whatsapp-service.js");
 
-async function main() {
-  const mode = process.argv[2];
+const mode = process.argv[2];
 
-  try {
-    if (mode === "morning") {
-      console.log("Menjalankan reminder pagi...");
-      await sendMorningReminder();
-    } else if (mode === "evening") {
-      console.log("Menjalankan reminder sore...");
-      await sendEveningReminder();
-    } else if (mode === "report") {
-      console.log("Mengirim laporan harian...");
-      await sendDailyReport();
-    } else {
-      throw new Error(
-        "Mode tidak valid. Gunakan: morning, evening, atau report."
-      );
-    }
+console.log(`Menjalankan layanan WhatsApp: ${mode}`);
 
-    console.log("Proses selesai.");
-  } catch (error) {
-    console.error("Gagal menjalankan proses:", error);
+run(mode)
+  .then(() => {
+    console.log("Proses WhatsApp selesai.");
+  })
+  .catch((error) => {
+    console.error(
+      "Proses WhatsApp gagal:",
+      error.response?.data || error
+    );
     process.exitCode = 1;
-  }
-}
-
-main();
+  });

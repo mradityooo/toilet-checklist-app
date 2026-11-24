@@ -36,7 +36,7 @@ jobs:
 
       - name: Install backend dependencies
         working-directory: backend
-        run: npm install --no-save firebase-admin
+        run: npm install --no-save firebase-admin axios
 
       - name: Prepare Firebase credentials
         env:
@@ -44,10 +44,13 @@ jobs:
         run: |
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > backend/firebase-service-account.json
 
+
       - name: Run WhatsApp reminder
         working-directory: backend
         env:
           FONNTE_TOKEN: ${{ secrets.FONNTE_TOKEN }}
+          PETUGAS_NUMBERS: ${{ secrets.PETUGAS_NUMBERS }}
+          SPV_NUMBERS: ${{ secrets.SPV_NUMBERS }}
           MODE: ${{ github.event.inputs.mode }}
           SCHEDULE: ${{ github.event.schedule }}
         run: |
@@ -61,6 +64,7 @@ jobs:
 
           echo "Menjalankan mode: $MODE"
           node ../scripts/run-reminder.js "$MODE"
+
 
       - name: Remove temporary Firebase credentials
         if: always()
