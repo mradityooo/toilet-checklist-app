@@ -1,5 +1,5 @@
-
-const admin = require("firebase-admin");
+const { initializeApp, cert, getApps } = require("firebase-admin/app");
+const { getFirestore } = require("firebase-admin/firestore");
 const axios = require("axios");
 
 const ITEMS = ["Lantai", "Closet", "Wastafel", "Sabun", "Tissue"];
@@ -30,16 +30,17 @@ const getNumbers = (envName) =>
     .map((number) => number.trim())
     .filter(Boolean);
 
-function initializeFirebase() {
-  if (!admin.apps.length) {
-    const serviceAccount = require("../backend/firebase-service-account.json");
 
-    admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount),
+function initializeFirebase() {
+  const serviceAccount = require("../backend/firebase-service-account.json");
+
+  if (getApps().length === 0) {
+    initializeApp({
+      credential: cert(serviceAccount),
     });
   }
 
-  return admin.firestore();
+  return getFirestore();
 }
 
 async function getDailyStatus(db, floor, date) {
