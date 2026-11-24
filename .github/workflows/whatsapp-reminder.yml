@@ -34,9 +34,9 @@ jobs:
         with:
           node-version: 22
 
-      - name: Install backend dependencies
-        working-directory: backend
-        run: npm install --no-save firebase-admin axios
+      - name: Install reminder dependencies
+        run: |
+          npm install --prefix "$RUNNER_TEMP/reminder-deps" --no-save --ignore-scripts firebase-admin axios
 
       - name: Prepare Firebase credentials
         env:
@@ -48,6 +48,7 @@ jobs:
       - name: Run WhatsApp reminder
         working-directory: backend
         env:
+          NODE_PATH: ${{ runner.temp }}/reminder-deps/node_modules
           FONNTE_TOKEN: ${{ secrets.FONNTE_TOKEN }}
           PETUGAS_NUMBERS: ${{ secrets.PETUGAS_NUMBERS }}
           SPV_NUMBERS: ${{ secrets.SPV_NUMBERS }}
