@@ -34,9 +34,6 @@ const fields = [
   "Tissue",
 ];
 
-
-
-
   // const CELL_WIDTH = 123;
   const DAY_WIDTH = 70;
   const INSPECTOR_WIDTH = 93;
@@ -44,12 +41,12 @@ const fields = [
   const NAVY: [number, number, number] = [0, 32, 96];
   const GOLD: [number, number, number] = [255, 193, 7];
   
+  type Props = {
+    onToggleFullscreen: () => void;
+  };
 
-export default function HomeScreen() {
+  export default function HomeScreen({ onToggleFullscreen }: Props) {
 
-  
-
-  
   const [time, setTime] = useState("");
   const [dateNow, setDateNow] = useState("");
   const [data, setData] = useState<any>({});
@@ -212,38 +209,6 @@ const updateInspector = async (
   selectedYear,
 ]);
 
-useEffect(() => {
-
-  const savedMonth =
-    localStorage.getItem("selectedMonth");
-
-  const savedYear =
-    localStorage.getItem("selectedYear");
-
-  if (savedMonth !== null) {
-    setSelectedMonth(Number(savedMonth));
-  }
-
-  if (savedYear !== null) {
-    setSelectedYear(Number(savedYear));
-  }
-
-}, []);
-
-
-useEffect(() => {
-
-  localStorage.setItem(
-    "selectedMonth",
-    selectedMonth.toString()
-  );
-
-  localStorage.setItem(
-    "selectedYear",
-    selectedYear.toString()
-  );
-
-}, [selectedMonth, selectedYear]);
 
  useEffect(() => {
 
@@ -886,14 +851,25 @@ const startX =
 
 </View>
 
-      <TouchableOpacity
-        style={styles.exportButton}
-       onPress={exportMonthlyPDF}
-      >
-      <Text style={styles.exportButtonText}>
-        EXPORT
-      </Text>
-    </TouchableOpacity>
+<View style={styles.headerActions}>
+
+  <TouchableOpacity
+    style={styles.fullscreenButton}
+    onPress={onToggleFullscreen}
+  >
+    <Text style={styles.fullscreenText}>⛶</Text>
+  </TouchableOpacity>
+
+  <TouchableOpacity
+    style={styles.exportButton}
+    onPress={exportMonthlyPDF}
+  >
+    <Text style={styles.exportButtonText}>
+      EXPORT
+    </Text>
+  </TouchableOpacity>
+
+</View>
 
   </View>
 
@@ -1489,6 +1465,27 @@ summaryCard: {
 
   borderWidth: 1,
   borderColor: "#edf0f5",
+},
+
+headerActions: {
+  flexDirection: "row",
+  alignItems: "center",
+  gap: 8,
+},
+
+fullscreenButton: {
+  width: 36,
+  height: 36,
+  borderRadius: 6,
+  backgroundColor: "#E2E8F0",
+  justifyContent: "center",
+  alignItems: "center",
+},
+
+fullscreenText: {
+  color: "#0F172A",
+  fontSize: 22,
+  fontWeight: "bold",
 },
 
 summaryRow: {

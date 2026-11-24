@@ -1,12 +1,32 @@
-
 import React, { useState, useRef, useMemo } from "react";
-import { View, PanResponder, StyleSheet } from "react-native";
+import {
+  View,
+  PanResponder,
+  StyleSheet,
+  Platform,
+} from "react-native";
 
 import HomeScreen from "./src/screens/HomeScreen";
 import FeedbackScreen from "./src/screens/FeedbackScreen";
 
 export default function App() {
   const [page, setPage] = useState<"checklist" | "feedback">("checklist");
+
+
+
+  const toggleFullscreen = async () => {
+    try {
+      if (Platform.OS !== "web") return;
+
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await document.documentElement.requestFullscreen();
+      }
+    } catch (error) {
+      console.warn("Fullscreen gagal:", error);
+    }
+  };
 
   const pageRef = useRef(page);
   pageRef.current = page;
@@ -39,11 +59,13 @@ export default function App() {
     <View style={styles.container}>
       <View style={styles.content} {...panResponder.panHandlers}>
         {page === "checklist" ? (
-          <HomeScreen />
+         <HomeScreen onToggleFullscreen={toggleFullscreen} />
         ) : (
           <FeedbackScreen />
         )}
       </View>
+
+
     </View>
   );
 }

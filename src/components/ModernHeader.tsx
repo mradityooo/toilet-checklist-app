@@ -15,12 +15,14 @@ type Props = {
   selectedYear: number;
   setSelectedYear: (value: number) => void;
   exportPDF: () => void;
+  onToggleFullscreen: () => void;
 };
 
 export default function ModernHeader({
   dateNow,
   time,
   exportPDF,
+  onToggleFullscreen,
 }: Props) {
   return (
     <View style={styles.headerWrapper}>
@@ -71,20 +73,52 @@ export default function ModernHeader({
       </View>
 
       {/* RIGHT */}
-      <TouchableOpacity
-        style={styles.exportButton}
-        onPress={exportPDF}
-      >
-        <Text style={styles.exportText}>
-          EXPORT
-        </Text>
-      </TouchableOpacity>
+      <View style={styles.rightActions}>
+
+        <TouchableOpacity
+          style={styles.fullscreenButton}
+          onPress={onToggleFullscreen}
+        >
+          <Text style={styles.fullscreenText}>⛶</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={styles.exportButton}
+          onPress={exportPDF}
+        >
+          <Text style={styles.exportText}>
+            EXPORT
+          </Text>
+        </TouchableOpacity>
+
+      </View>
 
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  rightActions: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+  },
+
+  fullscreenButton: {
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    backgroundColor: "#E2E8F0",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  fullscreenText: {
+    color: "#0F172A",
+    fontSize: 23,
+    fontWeight: "700",
+  },
+
   headerWrapper: {
     backgroundColor: "#FFFFFF",
     marginHorizontal: 20,
