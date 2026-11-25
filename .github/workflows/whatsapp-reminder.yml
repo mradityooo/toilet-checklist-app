@@ -8,7 +8,7 @@ on:
     # 15.45 WIB
     - cron: "45 8 * * *"
     # 16.05 WIB
-    - cron: "5 9 * * *"
+    - cron: "15 9 * * *"
 
   workflow_dispatch:
     inputs:
@@ -59,7 +59,7 @@ jobs:
             MODE="morning"
           elif [ "$SCHEDULE" = "45 8 * * *" ]; then
             MODE="evening"
-          elif [ "$SCHEDULE" = "5 9 * * *" ]; then
+          elif [ "$SCHEDULE" = "15 9 * * *" ]; then
             MODE="report"
           fi
 
