@@ -46,6 +46,7 @@ jobs:
 
 
  
+
       - name: Run WhatsApp reminder
         working-directory: backend
         env:
@@ -57,6 +58,7 @@ jobs:
           SCHEDULE: ${{ github.event.schedule }}
         run: |
           echo "Jadwal yang diterima: $SCHEDULE"
+          echo "Mode manual: $MODE"
 
           if [ "$SCHEDULE" = "47 1 * * *" ]; then
             MODE="morning"
@@ -68,6 +70,7 @@ jobs:
 
           echo "Menjalankan mode: $MODE"
           node ../scripts/run-reminder.js "$MODE"
+
 
       - name: Remove temporary Firebase credentials
         if: always()
