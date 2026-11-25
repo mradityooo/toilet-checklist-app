@@ -3,12 +3,12 @@ name: Toilet WhatsApp Reminder
 
 on:
   schedule:
-    # 08.45 WIB
-    - cron: "45 1 * * *"
-    # 15.45 WIB
-    - cron: "45 8 * * *"
-    # 16.05 WIB
-    - cron: "15 9 * * *"
+    # 08.47 WIB
+    - cron: "47 1 * * *"
+    # 15.47 WIB
+    - cron: "47 8 * * *"
+    # 16.17 WIB
+    - cron: "17 9 * * *"
 
   workflow_dispatch:
     inputs:
@@ -45,6 +45,7 @@ jobs:
           printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > backend/firebase-service-account.json
 
 
+ 
       - name: Run WhatsApp reminder
         working-directory: backend
         env:
@@ -55,17 +56,18 @@ jobs:
           MODE: ${{ github.event.inputs.mode }}
           SCHEDULE: ${{ github.event.schedule }}
         run: |
-          if [ "$SCHEDULE" = "45 1 * * *" ]; then
+          echo "Jadwal yang diterima: $SCHEDULE"
+
+          if [ "$SCHEDULE" = "47 1 * * *" ]; then
             MODE="morning"
-          elif [ "$SCHEDULE" = "45 8 * * *" ]; then
+          elif [ "$SCHEDULE" = "47 8 * * *" ]; then
             MODE="evening"
-          elif [ "$SCHEDULE" = "15 9 * * *" ]; then
+          elif [ "$SCHEDULE" = "17 9 * * *" ]; then
             MODE="report"
           fi
 
           echo "Menjalankan mode: $MODE"
           node ../scripts/run-reminder.js "$MODE"
-
 
       - name: Remove temporary Firebase credentials
         if: always()
