@@ -56,6 +56,7 @@ jobs:
           SPV_NUMBERS: ${{ secrets.SPV_NUMBERS }}
           MODE: ${{ github.event.inputs.mode }}
           SCHEDULE: ${{ github.event.schedule }}
+
         run: |
           echo "Jadwal yang diterima: $SCHEDULE"
           echo "Mode manual: $MODE"
@@ -70,7 +71,6 @@ jobs:
 
           echo "Menjalankan mode: $MODE"
           node ../scripts/run-reminder.js "$MODE"
-
 
       - name: Remove temporary Firebase credentials
         if: always()
